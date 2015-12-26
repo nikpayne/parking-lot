@@ -1,9 +1,16 @@
+$tile__fresh-selected: $blue;
+$tile__fresh-hover: white;
+$tile__fresh-resting: rgba(253,253,253,1);
+
+$tile__selected: white;
+$tile__hover: rgba(248,248,248,1);
+$tile__resting: rgba(240,240,240,1);
+
 main.lot{
   width: 100%;
   height: 100%;
   background-color: rgba(245,245,245,1);
 }
-
 
 .lot {
   &__column {
@@ -26,79 +33,89 @@ main.lot{
   }
   &__item {
     padding: .375rem 0;
+
     &-inner {
       position: relative;
       overflow: ellipsis;
-      background-color: white;
       border-radius: .15rem;
-      padding: 2rem;
-      box-shadow: 0 .07rem .05rem rgba(0,0,0,.1);
+      background-color: $tile__resting;
+
+      color: rgba(220,220,220,1);
+      box-shadow: none;
+      padding: 2rem 2rem 2rem 3rem;
     }
-    &.old {
+
+    &.fresh {
       .list__item-inner {
-        background-color: rgba(250,250,250,1);
-        background-color: rgba(248,248,248,1);
-        color: #999;
-        box-shadow: none;
+        color: black;
+        background-color: $tile__fresh-resting;
+        box-shadow: 0 .07rem .05rem rgba(0,0,0,.1);
       }
-    }
-    &:not(.selected) {
       &:hover .list__item-inner {
-        background-color: #9eb3fb;
-        color: white;
+        background-color: $tile__fresh-hover;
+        color: $blue;
       }
     }
-    &.selected .list__item-inner {
-      background: $blue;
-      color: white;
+    &:not(.fresh){
+      &:hover {
+        .list__item-inner {
+          background-color: $tile__hover;
+          color: black;
+        }
+      }
+      &.selected .list__item-inner {
+        background: $tile__selected;
+        color: $blue;
+      }
+    }
+    &.fresh {
+      &.selected .list__item-inner {
+        background: $tile__fresh-selected;
+        color: $blue;
+      }
     }
   }
   &__search-icon {
-    &:not(:hover) {
-      opacity: 0;
-    }
-    &:hover {
-      opacity: 1;
-    }
+    opacity: 0;
     position: absolute;
-    top: 1.3rem;
+    top: 2rem;
     right: 1rem;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 1.25rem;
     background-color: white;
-    border: 2px solid #444;
-    padding: .5rem;
+    padding: 0rem;
     img {
     }
   }
 }
+
 .controls {
   &__main {
     padding: 2rem 0;
   }
-  &__select {
+  &__button {
     display: inline-block;
     padding: .75rem 1.5rem;
     border-radius: .25rem;
-    border: 2px solid black;
+    background: white;
     font-size: 1rem;
+    min-width: 8rem;
+
     &:hover {
-      border: 2px solid $blue;
       background-color: $blue;
       color: white;
     }
-  }
-  &__delete {
-    display: inline-block;
-    padding: .75rem 1.5rem;
-    border-radius: .25rem;
-    border: 2px solid black;
-    font-size: 1rem;
-    &:hover {
-      border: 2px solid $blue;
-      background-color: $blue;
-      color: white;
+
+    &-select {
+
+
+    }
+    &-delete {
+
+    }
+    &-search {
+
     }
   }
 }

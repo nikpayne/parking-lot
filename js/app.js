@@ -41,18 +41,11 @@ var _interface =  {
     });
   },
 
-  getTime: function() {
-    return new Date().getTime();
-  },
-
-  getForm: function() {
-    return $('.form__text').val();
-  },
-
   setValue: function( keyValuePair ) {
     var parent = this;
     chrome.storage.local.set( keyValuePair, function(items) {
       if (!chrome.runtime.error) {
+        $('.form__text').val("");
         parent.animateFileSave();
       }
     });
@@ -62,12 +55,13 @@ var _interface =  {
     var parent = this;
     $(".form").submit(function( event ) {
       event.preventDefault();
-      var currTime = new Date().getTime();
-      var txtField = parent.getForm();
+      var currTime = new Date().getTime(),
+          txtField = $('.form__text').val(),
+          isFresh = true;
 
       chrome.storage.local.get("entries", function(items) {
         var entryList =  items.entries ? items.entries : [];
-        entryList.unshift( [currTime, txtField] );
+        entryList.unshift( [currTime, txtField, isFresh] );
         parent.setValue({ "entries" : entryList });
       });
       setTimeout(function(){

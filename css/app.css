@@ -279,58 +279,49 @@ main.lot {
   .list__item-inner {
     position: relative;
     overflow: ellipsis;
-    background-color: white;
     border-radius: .15rem;
-    padding: 2rem;
+    background-color: #f0f0f0;
+    color: gainsboro;
+    box-shadow: none;
+    padding: 2rem 2rem 2rem 3rem; }
+  .list__item.fresh .list__item-inner {
+    color: black;
+    background-color: #fdfdfd;
     box-shadow: 0 0.07rem 0.05rem rgba(0, 0, 0, 0.1); }
-  .list__item.old .list__item-inner {
-    background-color: #fafafa;
+  .list__item.fresh:hover .list__item-inner {
+    background-color: white;
+    color: #5C84F0; }
+  .list__item:not(.fresh):hover .list__item-inner {
     background-color: #f8f8f8;
-    color: #999;
-    box-shadow: none; }
-  .list__item:not(.selected):hover .list__item-inner {
-    background-color: #9eb3fb;
-    color: white; }
-  .list__item.selected .list__item-inner {
+    color: black; }
+  .list__item:not(.fresh).selected .list__item-inner {
+    background: white;
+    color: #5C84F0; }
+  .list__item.fresh.selected .list__item-inner {
     background: #5C84F0;
-    color: white; }
+    color: #5C84F0; }
 
 .list__search-icon {
+  opacity: 0;
   position: absolute;
-  top: 1.3rem;
+  top: 2rem;
   right: 1rem;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 1.25rem;
   background-color: white;
-  border: 2px solid #444;
-  padding: .5rem; }
-  .list__search-icon:not(:hover) {
-    opacity: 0; }
-  .list__search-icon:hover {
-    opacity: 1; }
+  padding: 0rem; }
 
 .controls__main {
   padding: 2rem 0; }
 
-.controls__select {
+.controls__button {
   display: inline-block;
   padding: .75rem 1.5rem;
   border-radius: .25rem;
-  border: 2px solid black;
-  font-size: 1rem; }
-  .controls__select:hover {
-    border: 2px solid #5C84F0;
-    background-color: #5C84F0;
-    color: white; }
-
-.controls__delete {
-  display: inline-block;
-  padding: .75rem 1.5rem;
-  border-radius: .25rem;
-  border: 2px solid black;
-  font-size: 1rem; }
-  .controls__delete:hover {
-    border: 2px solid #5C84F0;
+  background: white;
+  font-size: 1rem;
+  min-width: 8rem; }
+  .controls__button:hover {
     background-color: #5C84F0;
     color: white; }

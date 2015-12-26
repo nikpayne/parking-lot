@@ -7,17 +7,17 @@ var parkingLot = {
 
   setControls: function() {
     var parent = this;
-    $('.controls__select').on("click", function() {
+    $('.controls__button-select').on("click", function() {
       $(this).toggleClass('active');
       if($(this).hasClass('active')) {
         $(this).html('Uncheck All');
-        $('.list__item').addClass('selected');
+        $('.list__item.fresh').addClass('selected');
       } else {
         $(this).html('Select All');
         $('.list__item').removeClass('selected');
       }
     });
-    $('.controls__delete').on("click", function() {
+    $('.controls__button-delete').on("click", function() {
       var idArray = [];
       $('.list__item').each(function() {
         if($(this).hasClass("selected")){
@@ -26,6 +26,11 @@ var parkingLot = {
       });
       console.log(idArray);
       parent.deleteEntries(idArray);
+    });
+  },
+
+  makeStale: function() {
+    $('.list__main').on('click', '.list__search-icon', function() {
     });
   },
 
@@ -61,7 +66,10 @@ var parkingLot = {
             content = '';
 
         for(var i in arr) {
-          content += '<li data-id="' + arr[i][0] + '" class="list__item" draggable="true">';
+          if(arr[i][2] === true)
+            content += '<li data-id="' + arr[i][0] + '" class="list__item fresh" draggable="true">';
+          else
+            content += '<li data-id="' + arr[i][0] + '" class="list__item" draggable="true">';
           content += '<div class="list__item-inner">';
           content += arr[i][1];
           content += '<a class="list__search-icon" href="http://www.google.com/search?q=' + encodeURIComponent(arr[i][1]) + '" target="_blank">';
