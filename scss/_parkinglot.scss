@@ -1,0 +1,104 @@
+main.lot{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(245,245,245,1);
+}
+
+
+.lot {
+  &__column {
+    max-width: 800px;
+    padding: 0;
+    margin: 0 auto;
+    transition: opacity 250ms ease-in-out;
+    opacity: 1;
+    &.hideLot {
+      opacity: 0;
+    }
+  }
+}
+.list {
+  &__main {
+    margin-top: 0;
+    font-size: 2rem;
+    list-style: none;
+    padding-left: 0;
+  }
+  &__item {
+    padding: .375rem 0;
+    &-inner {
+      position: relative;
+      overflow: ellipsis;
+      background-color: white;
+      border-radius: .15rem;
+      padding: 2rem;
+      box-shadow: 0 .07rem .05rem rgba(0,0,0,.1);
+    }
+    &.old {
+      .list__item-inner {
+        background-color: rgba(250,250,250,1);
+        background-color: rgba(248,248,248,1);
+        color: #999;
+        box-shadow: none;
+      }
+    }
+    &:not(.selected) {
+      &:hover .list__item-inner {
+        background-color: #9eb3fb;
+        color: white;
+      }
+    }
+    &.selected .list__item-inner {
+      background: $blue;
+      color: white;
+    }
+  }
+  &__search-icon {
+    &:not(:hover) {
+      opacity: 0;
+    }
+    &:hover {
+      opacity: 1;
+    }
+    position: absolute;
+    top: 1.3rem;
+    right: 1rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 2rem;
+    background-color: white;
+    border: 2px solid #444;
+    padding: .5rem;
+    img {
+    }
+  }
+}
+.controls {
+  &__main {
+    padding: 2rem 0;
+  }
+  &__select {
+    display: inline-block;
+    padding: .75rem 1.5rem;
+    border-radius: .25rem;
+    border: 2px solid black;
+    font-size: 1rem;
+    &:hover {
+      border: 2px solid $blue;
+      background-color: $blue;
+      color: white;
+    }
+  }
+  &__delete {
+    display: inline-block;
+    padding: .75rem 1.5rem;
+    border-radius: .25rem;
+    border: 2px solid black;
+    font-size: 1rem;
+    &:hover {
+      border: 2px solid $blue;
+      background-color: $blue;
+      color: white;
+    }
+  }
+}

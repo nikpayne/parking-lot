@@ -1,0 +1,129 @@
+#file-folder {
+  position: absolute;
+  right: rem(28px);
+  top: rem(137px);
+  height: rem(25px);
+  width: rem(30px);
+
+  cursor: pointer;
+  opacity: 1;
+  transition: all 300ms linear;
+
+  &.active {
+    .upper { fill: white; }
+    .lower { fill: white; }
+  }
+
+  &.hidden {
+    right: rem(4px);
+    opacity: .2;
+  }
+
+  .parking { fill: white; }
+
+  .outer { fill: black; }
+  .upper { fill: #5C84F0; }
+  .lower { fill: #5C84F0; }
+  .parking { fill: white; }
+
+  &:hover {
+    opacity: 1;
+    .outer { fill: black; }
+    .upper { fill: #5C84F0; }
+    .lower { fill: #5C84F0; }
+  }
+}
+
+
+// Animations Begin ------------------------
+
+@keyframes circle {
+ 0% {
+    stroke-dashoffset: 1000;
+    stroke-width: 2;
+    opacity: 1;
+  }
+  100% {
+   stroke-dashoffset: 0;
+   stroke: #1888e7;
+   opacity: 0;
+  }
+}
+
+@keyframes check {
+ 0% { opacity: 0; }
+ 100% { opacity: 1; }
+}
+
+@keyframes lightGreen {
+  0% { fill: #FFFFFF; }
+  25% {
+    fill: #96D63F;
+    fill: #53c534;
+    fill: #5C84F0;
+  }
+  90% {
+    fill: #96D63F;
+    fill: #53c534;
+    fill: #5C84F0;
+  }
+  100% {
+    fill: #FFFFFF;
+  }
+}
+
+@keyframes darkGreen {
+  0% { fill: #555; }
+  15% {
+    fill: #111;
+  }
+  90% {
+    fill: #111;
+  }
+  100% { fill: #555; }
+}
+
+
+// End Animations ------------------------
+
+.component {
+  &.outer {
+    &.active {
+          animation: darkGreen 1.8s .3s forwards linear;
+    }
+  }
+  &.upper {
+    transition: fill 200ms ease;
+    &.active {
+      animation: lightGreen 1.8s .3s forwards linear;
+    }
+  }
+  &.lower {
+    transition: fill 200ms ease;
+    &.active {
+    animation: lightGreen 2s .3s forwards linear;
+    }
+  }
+  &.parking {
+    opacity: 1;
+    &.active {
+      opacity: 0;
+    }
+  }
+
+  &.circle {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    opacity: 0;
+    &.active {
+      animation: circle 1.15s 0s ease;
+    }
+  }
+  &.check {
+    opacity: 0;
+    &.active {
+      animation: check .2s .4s ease-in forwards;
+    }
+
+  }
+}
