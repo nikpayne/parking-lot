@@ -4,6 +4,8 @@ var parkingLot = {
     this.selectOnClick();
     this.setControls();
     this.watchChanges();
+    this.dragSelect();
+    this.clickToDeselect();
   },
 
   watchChanges: function() {
@@ -37,10 +39,54 @@ var parkingLot = {
       parent.markComplete(idArray);
       parent.resetButtons();
     });
+    $('.controls__button-settings').on('click', function() {
+      $('.settings__panel').toggleClass('reveal');
+    });
+    $('.settings__panel').on('click', function() {
+      $(this).toggleClass('reveal');
+    });
   },
 
   resetButtons: function() {
     $('.controls__button').removeClass('active');
+  },
+
+  clickToDeselect: function() {
+    // $('body').on("click", '.list__item', function() {
+    //   if($('.list__item.selected').length > 0)
+    //     $(this).removeClass("selected");
+    // });
+  },
+
+  dragSelect: function() {
+    $(function () {
+      var isMouseDown = false;
+      function pauseEvent(e){
+        if(e.stopPropagation) e.stopPropagation();
+        if(e.preventDefault) e.preventDefault();
+        e.cancelBubble=true;
+        e.returnValue=false;
+        return false;
+      }
+      $("main.lot").on('mousedown', '.list__item', function () {
+        e=e || window.event;
+        pauseEvent(e);
+        isMouseDown = true;
+        $(this).toggleClass("selected");
+        return false;
+      });
+      $("main.lot").on('mouseover', '.list__item', function () {
+        e=e || window.event;
+        pauseEvent(e);
+        if (isMouseDown) {
+          $(this).removeClass("selected");
+        }
+        return false;
+      });
+      $(document).mouseup(function () {
+        isMouseDown = false;
+      });
+    });
   },
 
   retrieveSelected: function() {
@@ -99,10 +145,10 @@ var parkingLot = {
 
         for(var i in arr) {
           if(arr[i][2] === true)
-            content += '<li data-id="' + arr[i][0] + '" class="list__item fresh" draggable="true">';
+            content += '<li data-id="' + arr[i][0] + '" class="list__item fresh" draggable="false">';
           else
-            content += '<li data-id="' + arr[i][0] + '" class="list__item" draggable="true">';
-          content += '<div tabindex="' + (i + 10) + '" class="list__item-inner">';
+            content += '<li data-id="' + arr[i][0] + '" class="list__item" draggable="false">';
+          content += '<div class="list__item-inner">';
           content += arr[i][1];
           content += '<a class="list__search-icon" href="http://www.google.com/search?q=' + encodeURIComponent(arr[i][1]) + '" target="_blank">';
           content += '<img src="../img/Google_Logo.svg" alt="google search icon" title="google this term"></a>';
@@ -115,7 +161,8 @@ var parkingLot = {
           $('.list__main').html('<li class="list__placeholder">time to add some ideas!</li>');
       }
     });
-  }
+  },
+
 };
 
 

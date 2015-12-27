@@ -1,36 +1,60 @@
+$tile__fresh-color: #444;
+$tile__fresh-color-hover: #000;
 $tile__fresh-selected: white;
 $tile__fresh-selected-color: $blue;
-$tile__fresh-hover: rgba(255,255,255,.85);
-$tile__fresh-resting: rgba(255,255,255,.65);
+$tile__fresh-hover: rgba(255,255,255,.75);
+$tile__fresh-resting: rgba(255,255,255,.6);
 
-$tile__selected: $blue;
+$tile__selected: white;
+$tile__selected-color: $blue;
 $tile__hover: rgba(255,255,255,.5);
 $tile__resting: rgba(255,255,255,.25);
-$tile__color: rgba(0,0,0,.15);
-$tile__color-hover: rgba(0,0,0,.35);
+$tile__color: rgba(0,0,0,.06);
+$tile__color-hover: rgba(0,0,0,.3);
 
 $tile__placeholder: rgba(0,0,0,.25);
 
-main.lot{
-  width: 100%;
-  height: 100%;
-  background: #00C9FF; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to top, #00C9FF , #92FE9D); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to top, #00C9FF , #92FE9D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
-
+body {
   background: #B3FFAB; /* fallback for old browsers */
   background: -webkit-linear-gradient(to top, #B3FFAB , #12FFF7); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to top, #B3FFAB , #12FFF7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-
-
-  background: #EFEFBB; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #EFEFBB , #D4D3DD); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #EFEFBB , #D4D3DD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #4CB8C4; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #4CB8C4 , #3CD3AD); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #4CB8C4 , #3CD3AD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
 }
 
+
+main.lot{
+  width: 100%;
+  height: 100%;
+}
+
+.settings {
+  &__panel {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    opacity: 0;
+    z-index: 10;
+    height: 100%;
+    width: 100%;
+
+    background: rgba(255,255,255,.95);
+    transition: all 200ms ease-in;
+    transform: rotateX(100deg);
+    &.reveal {
+      transition: all 300ms ease-out;
+      top: 0;
+      opacity: 1;
+      transform: rotateX(0deg);
+    }
+    .column {
+      height: 100%;
+      padding: 20rem 0;
+    }
+  }
+}
 
 .lot {
   &__column {
@@ -77,14 +101,14 @@ main.lot{
 
     &.fresh {
       .list__item-inner {
-        color: black;
+        color: $tile__fresh-color;
         background-color: $tile__fresh-resting;
         box-shadow: 0 .09rem .05rem rgba(0,0,0,.12);
         border-top: 2px solid rgba(255,255,255,.4);
       }
       &:hover .list__item-inner {
         background-color: $tile__fresh-hover;
-        color: $blue;
+        color: $tile__fresh-color-hover;
       }
     }
     &:not(.fresh){
@@ -96,7 +120,7 @@ main.lot{
       }
       &.selected .list__item-inner {
         background: $tile__selected;
-        color: white;
+        color: $tile__selected-color;
         box-shadow: 0 .09rem .05rem rgba(0,0,0,.12);
       }
     }

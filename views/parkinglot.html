@@ -5,8 +5,16 @@
     <link rel="stylesheet" href="../css/app.css" media="screen" charset="utf-8">
     <script src="../js/jquery-2.1.4.min.js"></script>
   </head>
-  <body>
-
+  <body style="position: relative;">
+    <header class="settings__panel">
+      <div class="column" style="padding: 2rem 4rem;">
+        <ul>
+          <li>La</li>
+          <li>Deselect</li>
+          <li>DAAAA</li>
+        </ul>
+      </div>
+    </header>
     <main class="lot">
       <div class="lot__column">
         <div class="controls__main">
@@ -16,14 +24,14 @@
           <div class="controls__button controls__button-delete">
             Delete
           </div>
-          <div class="controls__button controls__button-unfresh">
-            Mark as done
+          <div class="controls__button controls__button-unfresh" title="mark as complete">
+            <img class="controls__icon" src="../img/icon-complete.svg" alt="search magnifying glass icon">
           </div>
-          <div class="controls__button controls__button-search">
-            <img class="controls__icon" src="../img/icon-search.svg" alt="search magnifying glass icon" title="search">
+          <div class="controls__button controls__button-search" title="search">
+            <img class="controls__icon" src="../img/icon-search.svg" alt="search magnifying glass icon">
           </div>
-          <div class="controls__button controls__button-settings">
-            <img class="controls__icon" src="../img/icon-gear.svg" alt="settings gear icon" title="settings">
+          <div class="controls__button controls__button-settings"  title="configure settings">
+            <img class="controls__icon" src="../img/icon-gear.svg" alt="settings gear icon">
           </div>
         </div>
 
