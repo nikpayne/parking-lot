@@ -1,8 +1,17 @@
 var parkingLot = {
   initialize: function() {
-      this.generateList();
-      this.selectOnClick();
-      this.setControls();
+    this.fillEntries();
+    this.selectOnClick();
+    this.setControls();
+    this.watchChanges();
+  },
+
+  watchChanges: function() {
+    var parent = this;
+    chrome.storage.onChanged.addListener(function(changes, namespace) {
+      $('.lot__row').attr("class", 'lot__row hideLot');
+      parent.fillEntries();
+    });
   },
 
   setControls: function() {
@@ -10,28 +19,38 @@ var parkingLot = {
     $('.controls__button-select').on("click", function() {
       $(this).toggleClass('active');
       if($(this).hasClass('active')) {
-        $(this).html('Uncheck All');
         $('.list__item.fresh').addClass('selected');
+        if($('.list__item.fresh').length > 0)
+          $(this).html('Deselect');
       } else {
         $(this).html('Select All');
         $('.list__item').removeClass('selected');
       }
     });
     $('.controls__button-delete').on("click", function() {
-      var idArray = [];
-      $('.list__item').each(function() {
-        if($(this).hasClass("selected")){
-          idArray.push($(this).data("id"));
-        }
-      });
-      console.log(idArray);
+      var idArray = parent.retrieveSelected();
       parent.deleteEntries(idArray);
+      parent.resetButtons();
+    });
+    $('.controls__button-unfresh').on('click', function() {
+      var idArray = parent.retrieveSelected();
+      parent.markComplete(idArray);
+      parent.resetButtons();
     });
   },
 
-  makeStale: function() {
-    $('.list__main').on('click', '.list__search-icon', function() {
+  resetButtons: function() {
+    $('.controls__button').removeClass('active');
+  },
+
+  retrieveSelected: function() {
+    var idArray = [];
+    $('.list__item').each(function() {
+      if($(this).hasClass("selected")){
+        idArray.push($(this).data("id"));
+      }
     });
+    return idArray;
   },
 
   selectOnClick: function() {
@@ -40,15 +59,28 @@ var parkingLot = {
     });
   },
 
-  deleteEntries: function(idArray) {
-    var parent = this;
+  markComplete: function(idArray) {
     chrome.storage.local.get("entries", function(items) {
       var entryList =  items.entries ? items.entries : [];
-
       for(var i = entryList.length - 1; i >= 0; i--) {
-        if(idArray.indexOf(entryList[i][0]) != -1){
-          entryList.splice(i,1);
+        if(idArray.indexOf(entryList[i][0]) != -1)
+          entryList[i][2] = false;
+      }
+      chrome.storage.local.set({ "entries": entryList }, function(items) {
+        if (!chrome.runtime.error) {
         }
+      });
+    });
+  },
+
+  deleteEntries: function(idArray) {
+    var parent = this;
+
+    chrome.storage.local.get("entries", function(items) {
+      var entryList =  items.entries ? items.entries : [];
+      for(var i = entryList.length - 1; i >= 0; i--) {
+        if(idArray.indexOf(entryList[i][0]) != -1)
+          entryList.splice(i,1);
       }
       chrome.storage.local.set({ "entries": entryList }, function(items) {
         if (!chrome.runtime.error) {
@@ -58,7 +90,7 @@ var parkingLot = {
     });
   },
 
-  generateList : function() {
+  fillEntries: function() {
     var parent = this;
     chrome.storage.local.get("entries", function(items) {
       if (!chrome.runtime.error) {
@@ -70,21 +102,18 @@ var parkingLot = {
             content += '<li data-id="' + arr[i][0] + '" class="list__item fresh" draggable="true">';
           else
             content += '<li data-id="' + arr[i][0] + '" class="list__item" draggable="true">';
-          content += '<div class="list__item-inner">';
+          content += '<div tabindex="' + (i + 10) + '" class="list__item-inner">';
           content += arr[i][1];
           content += '<a class="list__search-icon" href="http://www.google.com/search?q=' + encodeURIComponent(arr[i][1]) + '" target="_blank">';
           content += '<img src="../img/Google_Logo.svg" alt="google search icon" title="google this term"></a>';
           content += '</div>';
           content += '</li>';
         }
-        $('.list__main').html(content);
+        if(arr.length != 0)
+          $('.list__main').html(content);
+        else
+          $('.list__main').html('<li class="list__placeholder">time to add some ideas!</li>');
       }
-    });
-    chrome.storage.onChanged.addListener(function(changes, namespace) {
-      $('.lot__row').attr("class", 'lot__row hideLot');
-      setTimeout(function(){
-        location.reload();
-      }, 200);
     });
   }
 };

@@ -15,8 +15,21 @@ var _interface =  {
   },
 
   linkPage: function(){
+    var parent = this;
     $('#list-link').on("click", function() {
       chrome.tabs.create({url:'views/parkinglot.html'});
+    });
+    $("#file-folder").keypress(function (e) {
+      if (e.keyCode == 13) {
+        if($('.form__text').val() != ''){
+          parent.storeValue();
+          setTimeout(function(){
+            chrome.tabs.create({url:'views/parkinglot.html'});
+          }, 1600);
+        } else {
+          chrome.tabs.create({url:'views/parkinglot.html'});
+        }
+      }
     });
   },
 
@@ -26,6 +39,7 @@ var _interface =  {
         var len = $('.form__text').val().length;
         if( len === 0 && this.typed) {
           $('.footer code').attr("class", "");
+          $('.footer small').attr("class", "");
           $('#file-folder').attr("class", "");
         } else if( len >= 1 && len <= 4) {
           $('.footer code').addClass("active");
@@ -33,7 +47,7 @@ var _interface =  {
           $('#file-folder').attr("class", "active");
           this.typed = true;
         } else if(len >= 28 ) {
-          $('#file-folder').attr("class", "active hidden");
+          $('#file-folder').attr("class", "active offset");
         }
       } else {
         return false;
@@ -51,22 +65,26 @@ var _interface =  {
     });
   },
 
+  storeValue: function() {
+    var parent = this;
+    var currTime = new Date().getTime(),
+        txtField = $('.form__text').val(),
+        isFresh = true;
+    chrome.storage.local.get("entries", function(items) {
+      var entryList =  items.entries ? items.entries : [];
+      entryList.unshift( [currTime, txtField, isFresh] );
+      parent.setValue({ "entries" : entryList });
+    });
+  },
+
   smartSubmit: function() {
     var parent = this;
     $(".form").submit(function( event ) {
       event.preventDefault();
-      var currTime = new Date().getTime(),
-          txtField = $('.form__text').val(),
-          isFresh = true;
-
-      chrome.storage.local.get("entries", function(items) {
-        var entryList =  items.entries ? items.entries : [];
-        entryList.unshift( [currTime, txtField, isFresh] );
-        parent.setValue({ "entries" : entryList });
-      });
+      parent.storeValue();
       setTimeout(function(){
         window.close();
-      }, 1300);
+      }, 1600);
     });
   }
 

@@ -14,23 +14,40 @@
     .lower { fill: white; }
   }
 
-  &.hidden {
+  &.offset {
     right: rem(4px);
-    opacity: .2;
   }
 
-  .parking { fill: white; }
-
+  // Resting State
   .outer { fill: black; }
   .upper { fill: #5C84F0; }
   .lower { fill: #5C84F0; }
   .parking { fill: white; }
 
+  // When hovering over Icon
   &:hover {
     opacity: 1;
+    transition: fill 300ms linear;
+    .parking {
+      fill: none;
+      transition: fill 300ms linear;
+    }
+    .arrow {
+      fill: white;
+      transition: fill 300ms linear;
+    }
     .outer { fill: black; }
     .upper { fill: #5C84F0; }
     .lower { fill: #5C84F0; }
+  }
+
+  // When icon is active
+  &:focus {
+    outline: none;
+    .upper { fill: $turq; }
+    .lower { fill: $turq; }
+    .arrow { fill: white; }
+    .parking { fill: none; }
   }
 }
 
@@ -60,12 +77,13 @@
   25% {
     fill: #96D63F;
     fill: #53c534;
-    fill: #5C84F0;
+    fill: $turq;
   }
   90% {
     fill: #96D63F;
     fill: #53c534;
     fill: #5C84F0;
+    fill: $turq;
   }
   100% {
     fill: #FFFFFF;
@@ -88,42 +106,33 @@
 
 .component {
   &.outer {
-    &.active {
-          animation: darkGreen 1.8s .3s forwards linear;
-    }
+    &.active { animation: darkGreen 1.8s .3s forwards linear; }
   }
   &.upper {
     transition: fill 200ms ease;
-    &.active {
-      animation: lightGreen 1.8s .3s forwards linear;
-    }
+    &.active { animation: lightGreen 1.25s .3s forwards linear; }
   }
   &.lower {
     transition: fill 200ms ease;
-    &.active {
-    animation: lightGreen 2s .3s forwards linear;
-    }
+    &.active { animation: lightGreen 1.25s .3s forwards linear; }
   }
   &.parking {
     opacity: 1;
-    &.active {
-      opacity: 0;
-    }
+    &.active { opacity: 0; }
+  }
+  &.arrow {
+    opacity: 1;
+    &.active { opacity: 0; }
   }
 
   &.circle {
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
     opacity: 0;
-    &.active {
-      animation: circle 1.15s 0s ease;
-    }
+    &.active { animation: circle 1.15s 0s ease; }
   }
   &.check {
     opacity: 0;
-    &.active {
-      animation: check .2s .4s ease-in forwards;
-    }
-
+    &.active { animation: check .2s .4s ease-in forwards; }
   }
 }

@@ -1,0 +1,8 @@
+<svg  viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Oval-4-+-P" sketch:type="MSLayerGroup">
+            <circle id="Oval-4" fill="#365CBF" sketch:type="MSShapeGroup" cx="64" cy="64" r="64"></circle>
+            <path d="M55.76,98 L42.27,98 L42.27,34.635 L71.91,34.635 C78.5600333,34.635 83.7691478,36.5824805 87.5375,40.4775 C91.3058522,44.3725195 93.19,49.2333042 93.19,55.06 C93.19,60.8233621 91.290019,65.6683137 87.49,69.595 C83.689981,73.5216863 78.4966996,75.485 71.91,75.485 L55.76,75.485 L55.76,98 Z M70.105,63.61 C72.8283469,63.61 75.0608246,62.8341744 76.8025,61.2825 C78.5441754,59.7308256 79.415,57.6566797 79.415,55.06 C79.415,52.4633204 78.5441754,50.3891744 76.8025,48.8375 C75.0608246,47.2858256 72.8283469,46.51 70.105,46.51 L55.76,46.51 L55.76,63.61 L70.105,63.61 Z" id="P" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

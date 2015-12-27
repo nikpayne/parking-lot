@@ -1,16 +1,36 @@
-$tile__fresh-selected: $blue;
-$tile__fresh-hover: white;
-$tile__fresh-resting: rgba(253,253,253,1);
+$tile__fresh-selected: white;
+$tile__fresh-selected-color: $blue;
+$tile__fresh-hover: rgba(255,255,255,.85);
+$tile__fresh-resting: rgba(255,255,255,.65);
 
-$tile__selected: white;
-$tile__hover: rgba(248,248,248,1);
-$tile__resting: rgba(240,240,240,1);
+$tile__selected: $blue;
+$tile__hover: rgba(255,255,255,.5);
+$tile__resting: rgba(255,255,255,.25);
+$tile__color: rgba(0,0,0,.15);
+$tile__color-hover: rgba(0,0,0,.35);
+
+$tile__placeholder: rgba(0,0,0,.25);
 
 main.lot{
   width: 100%;
   height: 100%;
-  background-color: rgba(245,245,245,1);
+  background: #00C9FF; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #00C9FF , #92FE9D); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #00C9FF , #92FE9D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+  background: #B3FFAB; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #B3FFAB , #12FFF7); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #B3FFAB , #12FFF7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+  background: #EFEFBB; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #EFEFBB , #D4D3DD); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #EFEFBB , #D4D3DD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
 
 .lot {
   &__column {
@@ -31,6 +51,15 @@ main.lot{
     list-style: none;
     padding-left: 0;
   }
+  &__placeholder {
+    border: 2px dashed $tile__placeholder;
+    padding: 5rem 3rem;
+    text-align: center;
+    font-size: 2rem;
+    text-transform: lowercase;
+    color: $tile__placeholder;
+    border-radius: .25rem;
+  }
   &__item {
     padding: .375rem 0;
 
@@ -38,18 +67,20 @@ main.lot{
       position: relative;
       overflow: ellipsis;
       border-radius: .15rem;
-      background-color: $tile__resting;
 
-      color: rgba(220,220,220,1);
+      background-color: $tile__resting;
+      color: $tile__color;
       box-shadow: none;
-      padding: 2rem 2rem 2rem 3rem;
+      padding: 1rem 1rem 1rem 2rem;
+      transition: all 100ms ease;
     }
 
     &.fresh {
       .list__item-inner {
         color: black;
         background-color: $tile__fresh-resting;
-        box-shadow: 0 .07rem .05rem rgba(0,0,0,.1);
+        box-shadow: 0 .09rem .05rem rgba(0,0,0,.12);
+        border-top: 2px solid rgba(255,255,255,.4);
       }
       &:hover .list__item-inner {
         background-color: $tile__fresh-hover;
@@ -60,25 +91,30 @@ main.lot{
       &:hover {
         .list__item-inner {
           background-color: $tile__hover;
-          color: black;
+          color: $tile__color-hover;
         }
       }
       &.selected .list__item-inner {
         background: $tile__selected;
-        color: $blue;
+        color: white;
+        box-shadow: 0 .09rem .05rem rgba(0,0,0,.12);
       }
     }
     &.fresh {
       &.selected .list__item-inner {
         background: $tile__fresh-selected;
-        color: $blue;
+        color: $tile__fresh-selected-color;
       }
+    }
+    .list__item-inner:focus {
+      background-color: $turq;
+      outline: none;
     }
   }
   &__search-icon {
     opacity: 0;
     position: absolute;
-    top: 2rem;
+    top: 1rem;
     right: 1rem;
     width: 2.5rem;
     height: 2.5rem;
@@ -93,29 +129,40 @@ main.lot{
 .controls {
   &__main {
     padding: 2rem 0;
+    display: flex;
+    flex-direction: row;
   }
   &__button {
-    display: inline-block;
-    padding: .75rem 1.5rem;
-    border-radius: .25rem;
-    background: white;
+    padding: 0;
     font-size: 1rem;
     min-width: 8rem;
+    max-height: 3rem;
+    padding: .5rem;
+    cursor: pointer;
+    margin: 0 .5rem;
+    background-color: rgba(255,255,255,.6);
+
+    border: 1px solid white;
 
     &:hover {
+      background-color: $lime;
       background-color: $blue;
       color: white;
+      img {
+        fill: white;
+      }
     }
-
-    &-select {
-
-
-    }
-    &-delete {
-
-    }
-    &-search {
-
-    }
+  }
+  &__icon {
+    height: 2rem;
+    width: auto;
+  }
+}
+.parking {
+  &__icon {
+    height: 6rem;
+    width: 6rem;
+    margin: 2rem auto;
+    display: block;
   }
 }
