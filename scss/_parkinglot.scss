@@ -90,6 +90,15 @@ main.lot{
   &__item {
     padding: .375rem 0;
 
+    &:focus {
+      outline: none;
+
+      .list__item-inner {
+        background-color: white !important;
+        color: red;
+      }
+    }
+
     &-inner {
       position: relative;
       overflow: ellipsis;
@@ -158,6 +167,7 @@ main.lot{
     padding: 2rem 0;
     display: flex;
     flex-direction: row;
+    justify-content: center;
   }
   &__button {
     padding: 0;
@@ -167,11 +177,12 @@ main.lot{
     cursor: pointer;
     margin: 0 .5rem;
     background-color: rgba(255,255,255,.6);
+    border: 1px solid rgba(255,255,255,.65);
     border-radius: .25rem;
+    box-shadow: 0 .09rem .05rem rgba(0,0,0,.12);
 
     &:hover {
-      background-color: $lime;
-      background-color: $blue;
+      background-color: white;
       color: white;
       img {
         fill: white;

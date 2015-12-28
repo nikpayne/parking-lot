@@ -10,8 +10,9 @@ var parkingLot = {
   watchChanges: function() {
     var parent = this;
     chrome.storage.onChanged.addListener(function(changes, namespace) {
-      $('.lot__row').attr("class", 'lot__row hideLot');
-      parent.fillEntries();
+      setTimeout(function() {
+        parent.fillEntries();
+      }, 500);
     });
   },
 
@@ -22,31 +23,36 @@ var parkingLot = {
       $(this).toggleClass('active');
       if($(this).hasClass('active')) {
         $('.list__item.fresh').addClass('selected');
-        if($('.list__item.fresh').length > 0)
-          $(this).html('Deselect');
       } else {
-        $(this).html('Select All');
         $('.list__item').removeClass('selected');
       }
     });
+
+    $('.controls__button-search').on("click", function() {
+      $('.list__item.selected').each(function() {
+        var href = $(this).data("href");
+        window.open(href, '_blank');
+      });
+    });
+
     $('.controls__button-delete').on("click", function() {
       var idArray = parent.retrieveSelected();
       if(idArray.length)
         parent.deleteEntries(idArray);
       parent.deselectAll();
     });
+
     $('.controls__button-unfresh').on('click', function() {
       var idArray = parent.retrieveSelected();
       if(idArray.length)
         parent.markComplete(idArray);
       parent.deselectAll();
     });
-    $('.controls__button-settings').on('click', function() {
-      $('.settings__panel').toggleClass('reveal');
-    });
-    $('.settings__panel').on('click', function() {
-      $(this).toggleClass('reveal');
-    });
+
+    $('.controls__button-settings').on('click', function() { $('.settings__panel').toggleClass('reveal'); });
+
+    $('.settings__panel').on('click', function() { $(this).toggleClass('reveal'); });
+
   },
 
 
@@ -143,13 +149,11 @@ var parkingLot = {
 
         for(var i in arr) {
           if(arr[i][2] === true)
-            content += '<li data-id="' + arr[i][0] + '" class="list__item fresh" draggable="false">';
+            content += '<li tabindex="' + (i + 10) + '" data-id="' + arr[i][0] + '" data-href="http://www.google.com/search?q=' + encodeURIComponent(arr[i][1]) + '" class="list__item fresh" draggable="false">';
           else
-            content += '<li data-id="' + arr[i][0] + '" class="list__item" draggable="false">';
+            content += '<li tabindex="' + (i + 10) + '" data-id="' + arr[i][0] + '" data-href="http://www.google.com/search?q=' + encodeURIComponent(arr[i][1]) + '" class="list__item" draggable="false">';
           content += '<div class="list__item-inner">';
           content += arr[i][1];
-          content += '<a class="list__search-icon" href="http://www.google.com/search?q=' + encodeURIComponent(arr[i][1]) + '" target="_blank">';
-          content += '<img src="../img/Google_Logo.svg" alt="google search icon" title="google this term"></a>';
           content += '</div>';
           content += '</li>';
         }

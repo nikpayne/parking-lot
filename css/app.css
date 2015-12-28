@@ -339,6 +339,11 @@ main.lot {
 
 .list__item {
   padding: .375rem 0; }
+  .list__item:focus {
+    outline: none; }
+    .list__item:focus .list__item-inner {
+      background-color: white !important;
+      color: red; }
   .list__item-inner {
     position: relative;
     overflow: ellipsis;
@@ -388,7 +393,10 @@ main.lot {
   display: flex;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
-  flex-direction: row; }
+  flex-direction: row;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
 
 .controls__button {
   padding: 0;
@@ -398,10 +406,11 @@ main.lot {
   cursor: pointer;
   margin: 0 .5rem;
   background-color: rgba(255, 255, 255, 0.6);
-  border-radius: .25rem; }
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: .25rem;
+  box-shadow: 0 0.09rem 0.05rem rgba(0, 0, 0, 0.12); }
   .controls__button:hover {
-    background-color: #78d800;
-    background-color: #5C84F0;
+    background-color: white;
     color: white; }
     .controls__button:hover img {
       fill: white; }
