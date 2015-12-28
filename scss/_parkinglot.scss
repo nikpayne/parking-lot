@@ -1,9 +1,9 @@
-$tile__fresh-color: #444;
-$tile__fresh-color-hover: #000;
 $tile__fresh-selected: white;
 $tile__fresh-selected-color: $blue;
-$tile__fresh-hover: rgba(255,255,255,.75);
-$tile__fresh-resting: rgba(255,255,255,.6);
+$tile__fresh-hover: rgba(255,255,255,.8);
+$tile__fresh-resting: rgba(255,255,255,.7);
+$tile__fresh-color: #444;
+$tile__fresh-color-hover: #000;
 
 $tile__selected: white;
 $tile__selected-color: $blue;
@@ -14,14 +14,17 @@ $tile__color-hover: rgba(0,0,0,.3);
 
 $tile__placeholder: rgba(0,0,0,.25);
 
-body {
-  background: #B3FFAB; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to top, #B3FFAB , #12FFF7); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to top, #B3FFAB , #12FFF7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+body.lot {
   background: #4CB8C4; /* fallback for old browsers */
   background: -webkit-linear-gradient(to bottom, #4CB8C4 , #3CD3AD); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4CB8C4 , #3CD3AD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+  background: linear-gradient(to bottom, #4CB8C4 , #3CD3AD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 
@@ -159,14 +162,12 @@ main.lot{
   &__button {
     padding: 0;
     font-size: 1rem;
-    min-width: 8rem;
     max-height: 3rem;
     padding: .5rem;
     cursor: pointer;
     margin: 0 .5rem;
     background-color: rgba(255,255,255,.6);
-
-    border: 1px solid white;
+    border-radius: .25rem;
 
     &:hover {
       background-color: $lime;

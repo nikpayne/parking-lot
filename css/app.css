@@ -275,17 +275,17 @@ main {
     -webkit-animation: check .2s .4s ease-in forwards;
     animation: check .2s .4s ease-in forwards; }
 
-body {
-  background: #B3FFAB;
-  /* fallback for old browsers */
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to top, #B3FFAB, #12FFF7);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+body.lot {
   background: #4CB8C4;
   /* fallback for old browsers */
   /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to bottom, #4CB8C4, #3CD3AD);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
 
 main.lot {
   width: 100%;
@@ -350,11 +350,11 @@ main.lot {
     transition: all 100ms ease; }
   .list__item.fresh .list__item-inner {
     color: #444;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.7);
     box-shadow: 0 0.09rem 0.05rem rgba(0, 0, 0, 0.12);
     border-top: 2px solid rgba(255, 255, 255, 0.4); }
   .list__item.fresh:hover .list__item-inner {
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(255, 255, 255, 0.8);
     color: #000; }
   .list__item:not(.fresh):hover .list__item-inner {
     background-color: rgba(255, 255, 255, 0.5);
@@ -393,13 +393,12 @@ main.lot {
 .controls__button {
   padding: 0;
   font-size: 1rem;
-  min-width: 8rem;
   max-height: 3rem;
   padding: .5rem;
   cursor: pointer;
   margin: 0 .5rem;
   background-color: rgba(255, 255, 255, 0.6);
-  border: 1px solid white; }
+  border-radius: .25rem; }
   .controls__button:hover {
     background-color: #78d800;
     background-color: #5C84F0;

@@ -1,12 +1,11 @@
 var parkingLot = {
   initialize: function() {
     this.fillEntries();
-    this.selectOnClick();
     this.setControls();
     this.watchChanges();
-    this.dragSelect();
-    this.clickToDeselect();
+    this.itemSelection();
   },
+
 
   watchChanges: function() {
     var parent = this;
@@ -15,6 +14,7 @@ var parkingLot = {
       parent.fillEntries();
     });
   },
+
 
   setControls: function() {
     var parent = this;
@@ -31,13 +31,15 @@ var parkingLot = {
     });
     $('.controls__button-delete').on("click", function() {
       var idArray = parent.retrieveSelected();
-      parent.deleteEntries(idArray);
-      parent.resetButtons();
+      if(idArray.length)
+        parent.deleteEntries(idArray);
+      parent.deselectAll();
     });
     $('.controls__button-unfresh').on('click', function() {
       var idArray = parent.retrieveSelected();
-      parent.markComplete(idArray);
-      parent.resetButtons();
+      if(idArray.length)
+        parent.markComplete(idArray);
+      parent.deselectAll();
     });
     $('.controls__button-settings').on('click', function() {
       $('.settings__panel').toggleClass('reveal');
@@ -47,45 +49,44 @@ var parkingLot = {
     });
   },
 
-  resetButtons: function() {
-    $('.controls__button').removeClass('active');
-  },
 
-  clickToDeselect: function() {
-    // $('body').on("click", '.list__item', function() {
-    //   if($('.list__item.selected').length > 0)
-    //     $(this).removeClass("selected");
-    // });
-  },
-
-  dragSelect: function() {
-    $(function () {
-      var isMouseDown = false;
-      function pauseEvent(e){
-        if(e.stopPropagation) e.stopPropagation();
-        if(e.preventDefault) e.preventDefault();
-        e.cancelBubble=true;
-        e.returnValue=false;
-        return false;
-      }
-      $("main.lot").on('mousedown', '.list__item', function () {
-        e=e || window.event;
-        pauseEvent(e);
-        isMouseDown = true;
-        $(this).toggleClass("selected");
-        return false;
-      });
-      $("main.lot").on('mouseover', '.list__item', function () {
-        e=e || window.event;
-        pauseEvent(e);
-        if (isMouseDown) {
-          $(this).removeClass("selected");
+  itemSelection: function() {
+    var mousedown = false,
+        mousemove = false,
+        didSelect = false;
+    // listen for mouse events
+    $('body').on("mousedown", function() { mousedown = true; });
+    $('body').on('mousemove', function() { mousemove = true; });
+    function resetMouse() {
+      mousedown = false;
+      mousemove = false;
+      didSelect = false;
+    }
+    // when dragging over elements, make them selected (regardless of current state)
+    $('.list__main').on("mouseover", '.list__item', function() {
+      if(mousedown) {
+        if(!$(this).hasClass("selected")){
+          $(this).addClass("selected");
+          didSelect = true;
         }
-        return false;
-      });
-      $(document).mouseup(function () {
-        isMouseDown = false;
-      });
+      }
+    });
+    // toggle items that are directly clicked
+    $('.list__main').on("mousedown", '.list__item', function() {
+      $(this).toggleClass("selected");
+      didSelect = true;
+    });
+    // deselect when clicking on body AND no selection has been made
+    $('html').on("mouseup", function() {
+      if(mousemove && !didSelect) {
+        $('.list__item').removeClass("selected");
+      }
+      resetMouse();
+    });
+    // don't deselect when clicking on control buttons
+    $('.controls__button').on("mouseup", function(event) {
+      event.stopPropagation();
+      resetMouse();
     });
   },
 
@@ -99,10 +100,8 @@ var parkingLot = {
     return idArray;
   },
 
-  selectOnClick: function() {
-    $('.list__main').on("click", '.list__item', function(){
-        $(this).toggleClass("selected");
-    });
+  deselectAll: function() {
+    $('.list__item').removeClass("selected");
   },
 
   markComplete: function(idArray) {
@@ -130,7 +129,6 @@ var parkingLot = {
       }
       chrome.storage.local.set({ "entries": entryList }, function(items) {
         if (!chrome.runtime.error) {
-          console.log("now spliced");
         }
       });
     });
@@ -161,7 +159,7 @@ var parkingLot = {
           $('.list__main').html('<li class="list__placeholder">time to add some ideas!</li>');
       }
     });
-  },
+  }
 
 };
 
