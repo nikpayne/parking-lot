@@ -4,8 +4,31 @@ var parkingLot = {
     this.setControls();
     this.watchChanges();
     this.itemSelection();
+    this.clipboard();
   },
 
+  clipboard: function() {
+
+    $('.list__main').on("click", ".list__copy-button", function(event) {
+      $(this).parent().removeClass("selected");
+      var copied = $(this).next().text(),
+          top  = window.pageYOffset || document.documentElement.scrollTop;
+      copyToClipboard(copied, top);
+    });
+
+    function copyToClipboard( text, scrollpostion){
+      var copyDiv = document.createElement('div');
+      copyDiv.contentEditable = true;
+      document.body.appendChild(copyDiv);
+      copyDiv.innerHTML = text;
+      copyDiv.unselectable = "off";
+      copyDiv.focus();
+      document.execCommand('SelectAll');
+      document.execCommand("Copy", false, null);
+      document.body.removeChild(copyDiv);
+      $('html, body').scrollTop(scrollpostion);
+    }
+  },
 
   watchChanges: function() {
     var parent = this;
@@ -152,6 +175,7 @@ var parkingLot = {
             content += '<li tabindex="' + (i + 10) + '" data-id="' + arr[i][0] + '" data-href="http://www.google.com/search?q=' + encodeURIComponent(arr[i][1]) + '" class="list__item fresh" draggable="false">';
           else
             content += '<li tabindex="' + (i + 10) + '" data-id="' + arr[i][0] + '" data-href="http://www.google.com/search?q=' + encodeURIComponent(arr[i][1]) + '" class="list__item" draggable="false">';
+          content += '<div class="list__copy-button"><img src="../img/icon-clipboard.svg" alt="copy to clipboard" title="copy to clipboard"></div>';
           content += '<div class="list__item-inner">';
           content += arr[i][1];
           content += '</div>';

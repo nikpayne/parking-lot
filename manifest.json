@@ -21,7 +21,9 @@
     "activeTab",
     "https://ajax.googleapis.com/",
     "storage",
-    "background"
+    "background",
+    "clipboardWrite",
+    "clipboardRead"
   ],
   "commands": {
     "_execute_browser_action": {
