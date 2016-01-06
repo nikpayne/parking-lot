@@ -280,11 +280,25 @@ body.lot {
   /* fallback for old browsers */
   /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to bottom, #4CB8C4, #3CD3AD);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
 
 main.lot {
   width: 100%;
   height: 100%; }
+
+.lot__column {
+  max-width: 800px;
+  padding: 0;
+  margin: 0 auto;
+  transition: opacity 250ms ease-in-out;
+  opacity: 1; }
+  .lot__column.hideLot {
+    opacity: 0; }
 
 .settings__panel {
   position: absolute;
@@ -294,7 +308,7 @@ main.lot {
   z-index: 10;
   height: 100%;
   width: 100%;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.85);
   transition: all 200ms ease-in;
   -webkit-transform: rotateX(100deg);
   transform: rotateX(100deg); }
@@ -307,15 +321,6 @@ main.lot {
   .settings__panel .column {
     height: 100%;
     padding: 20rem 0; }
-
-.lot__column {
-  max-width: 800px;
-  padding: 0;
-  margin: 0 auto;
-  transition: opacity 250ms ease-in-out;
-  opacity: 1; }
-  .lot__column.hideLot {
-    opacity: 0; }
 
 .list__main {
   margin-top: 0;
@@ -333,24 +338,32 @@ main.lot {
   border-radius: .25rem; }
 
 .list__copy-button {
+  opacity: 0;
   position: absolute;
-  top: 1rem;
+  top: 50%;
   right: 1rem;
-  height: 2rem;
-  width: 2rem;
-  background: white;
-  z-index: 30; }
+  height: 3rem;
+  width: 3rem;
+  padding: .5rem;
+  z-index: 30;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  border-radius: 1.5rem;
+  background: none;
+  transition: all 200ms ease;
+  box-shadow: 0 0 0 3px #55b7c6; }
   .list__copy-button:hover {
-    background: yellow; }
+    background: white;
+    box-shadow: 0 0 0 5px #51c6b8; }
+  .list__copy-button img {
+    position: absolute;
+    top: .4rem; }
 
 .list__item {
   padding: .375rem 0;
   position: relative; }
   .list__item:focus {
     outline: none; }
-    .list__item:focus .list__item-inner {
-      background-color: white !important;
-      color: red; }
   .list__item-inner {
     position: relative;
     overflow: ellipsis;
@@ -359,7 +372,33 @@ main.lot {
     color: rgba(0, 0, 0, 0.06);
     box-shadow: none;
     padding: 1rem 1rem 1rem 2rem;
-    transition: all 100ms ease; }
+    transition: all 100ms ease;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto; }
+    .list__item-inner span:nth-child(1) {
+      position: relative;
+      -webkit-hyphens: auto;
+      -moz-hyphens: auto;
+      -ms-hyphens: auto;
+      hyphens: auto; }
+    .list__item-inner span:nth-child(2) {
+      font-size: .5rem;
+      color: rgba(0, 0, 0, 0.25);
+      font-weight: bold;
+      position: absolute;
+      top: .25rem;
+      left: .5rem; }
+    .list__item-inner span:nth-child(3) {
+      position: absolute;
+      top: 1rem;
+      left: 2rem;
+      overflow: ellipsis;
+      -webkit-hyphens: auto;
+      -moz-hyphens: auto;
+      -ms-hyphens: auto;
+      hyphens: auto; }
   .list__item.fresh .list__item-inner {
     color: #444;
     background-color: rgba(255, 255, 255, 0.7);
@@ -368,6 +407,9 @@ main.lot {
   .list__item.fresh:hover .list__item-inner {
     background-color: rgba(255, 255, 255, 0.8);
     color: #000; }
+  .list__item.fresh.selected .list__item-inner {
+    background: white;
+    color: #5C84F0; }
   .list__item:not(.fresh):hover .list__item-inner {
     background-color: rgba(255, 255, 255, 0.5);
     color: rgba(0, 0, 0, 0.3); }
@@ -375,9 +417,8 @@ main.lot {
     background: white;
     color: #5C84F0;
     box-shadow: 0 0.09rem 0.05rem rgba(0, 0, 0, 0.12); }
-  .list__item.fresh.selected .list__item-inner {
-    background: white;
-    color: #5C84F0; }
+  .list__item:hover .list__copy-button {
+    opacity: 1; }
   .list__item .list__item-inner:focus {
     background-color: #48b1f3;
     outline: none; }
@@ -406,21 +447,37 @@ main.lot {
   justify-content: center; }
 
 .controls__button {
-  padding: 0;
-  font-size: 1rem;
   max-height: 3rem;
   padding: .5rem;
-  cursor: pointer;
   margin: 0 .5rem;
-  background-color: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.65);
+  font-size: 1rem;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0.09rem 0.05rem rgba(0, 0, 0, 0.12);
   border-radius: .25rem;
-  box-shadow: 0 0.09rem 0.05rem rgba(0, 0, 0, 0.12); }
-  .controls__button:hover {
-    background-color: white;
-    color: white; }
-    .controls__button:hover img {
-      fill: white; }
+  background: rgba(255, 255, 255, 0.2); }
+  .controls__button svg path {
+    fill: rgba(0, 0, 0, 0.25); }
+  .controls__button svg rect {
+    fill: rgba(0, 0, 0, 0.25); }
+  .controls__button svg polygon {
+    fill: rgba(0, 0, 0, 0.25); }
+  .controls__button.active {
+    background: rgba(255, 255, 255, 0.8); }
+    .controls__button.active svg path {
+      fill: rgba(0, 0, 0, 0.75); }
+    .controls__button.active svg rect {
+      fill: rgba(0, 0, 0, 0.75); }
+    .controls__button.active svg polygon {
+      fill: rgba(0, 0, 0, 0.75); }
+    .controls__button.active:hover {
+      background-color: white; }
+      .controls__button.active:hover svg path {
+        fill: black; }
+      .controls__button.active:hover svg rect {
+        fill: black; }
+      .controls__button.active:hover svg polygon {
+        fill: black; }
 
 .controls__icon {
   height: 2rem;
