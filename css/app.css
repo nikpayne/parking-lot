@@ -411,7 +411,7 @@ main.lot {
     background: white;
     color: #5C84F0; }
   .list__item:not(.fresh):hover .list__item-inner {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.32);
     color: rgba(0, 0, 0, 0.3); }
   .list__item:not(.fresh).selected .list__item-inner {
     background: white;

@@ -42,30 +42,23 @@ var parkingLot = {
 
   setControls: function() {
     var parent = this;
+
     $('.controls__button-select').on("click", function() {
-      if($(this).hasClass('active')) {
-        $('.list__item.fresh').addClass('selected');
-      } else {
-        $('.list__item').removeClass('selected');
-      }
+      parent._toggleSelect();
     });
+
     $('.controls__button-search').on("click", function() {
-      $('.list__item.selected').each(function() {
-        var href = $(this).data("href");
-        window.open(href, '_blank');
-      });
+      parent._searchSelected();
     });
+
     $('.controls__button-delete').on("click", function() {
-      var idArray = parent.__retrieveSelected();
-      if(idArray.length)
-        parent.deleteEntries(idArray);
-      parent.__deselectAll();
+      parent._deleteSelected();
     });
     $('.controls__button-unfresh').on('click', function() {
-      var idArray = parent.__retrieveSelected();
+      var idArray = parent._retrieveSelected();
       if(idArray.length)
         parent.markComplete(idArray);
-      parent.__deselectAll();
+      parent._deselectAll();
     });
     $('.controls__button-settings').on('click', function() { $('.settings__panel').toggleClass('reveal'); });
     $('.settings__panel').on('click', function() { $(this).toggleClass('reveal'); });
@@ -73,58 +66,81 @@ var parkingLot = {
 
 
 
+
   itemSelection: function() {
-    var mousedown = false,
-        mousemove = false,
-        didSelect = false;
-    // listen for mouse events
-    $('body').on("mousedown", function() { mousedown = true; });
-    $('body').on('mousemove', function() { mousemove = true; });
+
     function resetMouse() {
       mousedown = false;
       mousemove = false;
       didSelect = false;
     }
-    // when dragging over elements, make them selected (regardless of current state)
+    var parent = this,
+        mousedown = false,
+        mousemove = false,
+        didSelect = false;
+
+    $('body').on("mousedown", function() {
+      mousedown = true;
+    }).on('mousemove', function() {
+      mousemove = true;
+    });
+
     $('.list__main').on("mouseover", '.list__item', function() {
       if(mousedown) {
         if(!$(this).hasClass("selected")){
           $(this).addClass("selected");
-          didSelect = true;
+          parent._enableUI();
         }
       }
     });
-    // toggle items that are directly clicked
+
     $('.list__main').on("mousedown", '.list__item', function() {
       $(this).toggleClass("selected");
       didSelect = true;
+      parent._enableUI();
     });
-    // deselect when clicking on body AND no selection has been made
+
     $('html').on("mouseup", function() {
-      if(mousemove && !didSelect) {
-        $('.list__item').removeClass("selected");
-      }
+      if(mousemove && !didSelect)
+        parent._deselectAll();
       resetMouse();
     });
-    // don't deselect when clicking on control buttons
+
     $('.controls__button').on("mouseup", function(event) {
-      event.stopPropagation();
+      // event.stopPropagation();
       resetMouse();
     });
   },
 
 
 
-  __updateControls: function() {
-    if(this.selected) {
-      $('.controls__button').addClass("active");
-    } else {
-      $('.controls__button').removeClass("active");
-    }
+  _enableUI: function() {
+    $('.controls__button').addClass("active");
+  },
+  _disableUI: function() {
+    $('.controls__button').removeClass("active");
   },
 
 
-  __retrieveSelected: function() {
+  _selectFresh: function() {
+    this.selected = true;
+    this._enableUI();
+    $('.list__item.fresh').addClass('selected');
+  },
+  _selectAll: function() {
+    this.selected = true;
+    this._enableUI();
+    $('.list__item').addClass('selected');
+  },
+  _deselectAll: function() {
+    this.selected = false;
+    this._disableUI();
+    $('.list__item').removeClass("selected");
+  },
+  _toggleSelect: function() {
+    $('.list__item.fresh').toggleClass("selected");
+  },
+  _retrieveSelected: function() {
     var idArray = [];
     $('.list__item').each(function() {
       if($(this).hasClass("selected")){
@@ -135,12 +151,18 @@ var parkingLot = {
   },
 
 
-
-  __deselectAll: function() {
-    this.selected = false;
-    $('.list__item').removeClass("selected");
+  _searchSelected: function() {
+    $('.list__item.selected').each(function() {
+      var href = $(this).data("href");
+      window.open(href, '_blank');
+    });
   },
-
+  _deleteSelected: function() {
+    var idArray = this._retrieveSelected();
+    if(idArray.length)
+      this.deleteEntries(idArray);
+    this._deselectAll();
+  },
 
 
   markComplete: function(idArray) {
